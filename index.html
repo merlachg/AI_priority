@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>illycaffè — Prioritizzazione Use Case AI</title>
+<style>
+:root{
+  --red:#C8102E;--red-l:#FBEAEA;--red-d:#8B0D1F;
+  --green:#1D9E75;--green-l:#E1F5EE;
+  --amber:#C47E0A;--amber-l:#FFF8E6;
+  --blue:#185FA5;--blue-l:#E6F1FB;
+  --gold:#9A6E00;--gold-l:#FFFBE6;--gold-b:#D4B233;
+  --bg:#F7F6F2;--surface:#FFFFFF;
+  --text:#1A1A18;--muted:#73726C;--faint:#B4B2A9;
+  --border:#DDD9D0;--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
+.shell{max-width:740px;margin:0 auto;padding:1.5rem 1rem 5rem}
+.hdr{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
+.hdr-dot{width:36px;height:36px;border-radius:8px;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.eyebrow{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.pg-title{font-size:18px;font-weight:600}
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:1.5rem}
+.tab{padding:8px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab.on{color:var(--red);border-bottom-color:var(--red)}
+.card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem}
+.card-title{font-size:15px;font-weight:600;margin-bottom:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.step{background:var(--bg);border-radius:var(--r-sm);padding:12px}
+.step-n{font-size:11px;font-weight:600;color:var(--red);margin-bottom:3px}
+.step-t{font-size:13px;font-weight:600;margin-bottom:3px}
+.step-d{font-size:12px;color:var(--muted);line-height:1.5}
+.info-box{background:var(--red-l);border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--red-d);line-height:1.5}
+.setup-box{background:var(--amber-l);border:.5px solid var(--gold-b);border-radius:var(--r-sm);padding:12px 16px;font-size:13px;line-height:1.6;margin-bottom:1rem}
+.setup-box code{background:white;padding:1px 6px;border-radius:3px;font-size:11px;font-family:'Courier New',monospace}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+input[type=text]{width:100%;border:.5px solid #C8C6BF;border-radius:var(--r-sm);padding:9px 12px;font-size:14px;color:var(--text);background:var(--surface);outline:none;font-family:inherit;transition:border-color .15s}
+input[type=text]:focus{border-color:var(--red)}
+.phase-bar{display:flex;gap:6px;align-items:center;margin-bottom:1.25rem;font-size:12px}
+.ph{color:var(--faint)}.ph.on{color:var(--text);font-weight:600}.ph-sep{color:var(--border)}
+.grp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.grp-label{font-size:13px;font-weight:600}
+.btn-xs{background:var(--bg);color:var(--muted);border:.5px solid var(--border);border-radius:5px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:inherit}
+.btn-xs:hover{background:#ECEAE3}
+.chk-row{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;user-select:none}
+.chk-row:hover{opacity:.8}
+.cb{width:18px;height:18px;border-radius:4px;border:1.5px solid #C8C6BF;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.cb.on{background:var(--red);border-color:var(--red)}
+.id-badge{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--bg);color:var(--muted);border:.5px solid var(--border);flex-shrink:0;letter-spacing:.02em}
+.id-badge.cons{background:var(--gold-l);color:var(--gold);border-color:var(--gold-b)}
+.case-name{font-size:13px}.case-name.cons{font-weight:500}
+.tracker{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:1rem;position:sticky;top:8px;z-index:10;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.trk-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pts-big{font-size:22px;font-weight:600}
+.pill{display:inline-block;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:500}
+.pill-gray{background:var(--bg);color:var(--muted)}
+.pill-green{background:var(--green-l);color:var(--green)}
+.pill-red{background:var(--red-l);color:var(--red-d)}
+.pill-blue{background:var(--blue-l);color:var(--blue)}
+.prog-track{height:5px;background:var(--border);border-radius:3px;margin-bottom:8px}
+.prog-fill{height:5px;border-radius:3px;transition:width .2s,background .3s}
+.trk-actions{display:flex;gap:8px}
+.vote-row{display:grid;grid-template-columns:62px 1fr 36px 68px;gap:8px;align-items:center;padding:7px 0;border-bottom:.5px solid var(--border)}
+.vote-row:last-child{border-bottom:none}
+.vote-row.cons-row{background:linear-gradient(90deg,var(--gold-l),transparent);padding-left:4px;margin:0 -4px;padding-right:4px}
+.pct{font-size:11px;color:var(--faint);text-align:right}
+.num-inp{border:.5px solid #C8C6BF;border-radius:5px;padding:5px 0;font-size:15px;font-weight:600;text-align:center;width:100%;outline:none;font-family:inherit;color:var(--text);background:var(--surface);transition:all .15s}
+.num-inp:focus{border-color:var(--red)}
+.num-inp.has-val{background:var(--green-l);border-color:var(--green)}
+.btn{background:var(--red);color:white;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn:disabled{background:#C8C6BF;cursor:not-allowed;opacity:1}
+.btn-out{background:transparent;color:var(--text);border:.5px solid #C8C6BF;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-family:inherit}
+.btn-out:hover{background:var(--bg)}
+.btn-row{display:flex;gap:10px;align-items:center;padding-top:4px;flex-wrap:wrap}
+.done-wrap{text-align:center;padding:2.5rem 1rem}
+.done-icon{width:56px;height:56px;border-radius:50%;background:var(--green-l);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.done-h{font-size:20px;font-weight:600;margin-bottom:8px}
+.done-sub{font-size:14px;color:var(--muted);max-width:400px;margin:0 auto 1.5rem;line-height:1.6}
+.done-box{background:var(--blue-l);border:.5px solid #B5D4F4;border-radius:var(--r-sm);padding:14px 18px;text-align:left;font-size:13px;line-height:1.7;margin:0 auto 1.25rem;max-width:480px}
+.done-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.sp-banner{background:var(--green-l);border:.5px solid var(--green);border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:#0F6E56;display:flex;align-items:center;gap:8px;margin-bottom:1rem}
+.agg-load-row{display:flex;gap:10px;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.drop-zone{border:2px dashed var(--border);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:1rem}
+.drop-zone:hover,.drop-zone.over{border-color:var(--red);background:var(--red-l)}
+.file-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem}
+.file-chip{background:var(--green-l);color:var(--green);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:500}
+.res-row{display:grid;grid-template-columns:28px 70px 1fr 70px;gap:8px;align-items:center;padding:6px 0;border-bottom:.5px solid var(--border)}
+.res-row:last-child{border-bottom:none}
+.res-bar-bg{height:4px;background:var(--border);border-radius:3px;margin-top:3px}
+.res-bar{height:4px;border-radius:3px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:500px){.steps{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.vote-row{grid-template-columns:54px 1fr 60px}.pct{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<div class="hdr">
+  <div class="hdr-dot">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="1.5"/><path d="M9 5v4l2.5 2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+  <div>
+    <div class="eyebrow">illycaffè — AI Strategy</div>
+    <div class="pg-title">Prioritizzazione Use Case AI</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab on" id="tab-vote" onclick="switchTab('vote')">Vota</div>
+  <div class="tab" id="tab-agg" onclick="switchTab('agg')">Aggrega risultati</div>
+</div>
+
+<!-- ═══ TAB VOTA ══════════════════════════════════════════ -->
+<div id="pane-vote">
+
+<div id="ph-intro">
+  <div id="setup-warning" style="display:none" class="setup-box">
+    <strong>⚙️ Configurazione necessaria</strong> — Il file non è ancora collegato a SharePoint.
+    Apri il file in un editor di testo e imposta la variabile <code>VOTES_FOLDER</code> con il percorso della cartella
+    dove salvare i voti (es. <code>/sites/ai-project/Shared%20Documents/AI%20Votes</code>), poi ricarica.
+    Oppure usa il pulsante "Scarica JSON" come backup.
+  </div>
+  <div id="sp-ok-banner" style="display:none" class="sp-banner">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="#1D9E75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Connesso a SharePoint — i voti verranno salvati automaticamente nella cartella configurata.
+  </div>
+  <div class="card">
+    <div class="steps">
+      <div class="step"><div class="step-n">STEP 1</div><div class="step-t">Scegli</div><div class="step-d">Seleziona i use case che conosci</div></div>
+      <div class="step"><div class="step-n">STEP 2</div><div class="step-t">Alloca</div><div class="step-d">Distribuisci esattamente 100 punti</div></div>
+      <div class="step"><div class="step-n">STEP 3</div><div class="step-t">Invia</div><div class="step-d">Il voto si salva su SharePoint in automatico</div></div>
+    </div>
+    <div class="info-box">I casi con <strong>★</strong> sono use case consolidati. Concentra i punti sui casi più urgenti per la tua funzione — non devi votarli tutti.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Prima di iniziare</div>
+    <div class="form-row">
+      <div><label>Nome e cognome *</label><input type="text" id="inp-name" placeholder="es. Mario Rossi"></div>
+      <div><label>Funzione / ruolo *</label><input type="text" id="inp-role" placeholder="es. Supply Chain Manager"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="startSelect()">Inizia →</button>
+      <span id="intro-err" style="font-size:12px;color:var(--red);display:none">Inserisci nome e ruolo per continuare.</span>
+    </div>
+  </div>
+</div>
+
+<div id="ph-select" style="display:none">
+  <div class="phase-bar"><span class="ph on">Selezione</span><span class="ph-sep">›</span><span class="ph">Allocazione</span><span class="ph-sep">›</span><span class="ph">Invio</span></div>
+  <div class="card" style="padding-bottom:.5rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+      <div class="card-title" style="margin:0">Scegli i use case</div>
+      <span id="sel-count" class="pill pill-gray">0 selezionati</span>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">Seleziona solo i casi che conosci o che impattano la tua funzione.</div>
+    <div id="grp-sel"></div>
+    <div class="btn-row" style="padding-top:12px">
+      <button class="btn-out" onclick="goPhase('intro')">← Indietro</button>
+      <button class="btn" id="btn-to-vote" onclick="startVote()" disabled>Alloca i punti →</button>
+    </div>
+  </div>
+</div>
+
+<div id="ph-vote" style="display:none">
+  <div class="phase-bar"><span class="ph">Selezione</span><span class="ph-sep">›</span><span class="ph on">Allocazione</span><span class="ph-sep">›</span><span class="ph">Invio</span></div>
+  <div class="tracker">
+    <div class="trk-top">
+      <div><span class="pts-big" id="trk-n">0</span><span style="font-size:13px;color:var(--muted)"> / 100 punti</span></div>
+      <span id="trk-pill" class="pill pill-gray">100 da distribuire</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="trk-bar" style="width:0%;background:#378ADD"></div></div>
+    <div class="trk-actions">
+      <button class="btn-xs" onclick="distEvenly()">Distribuisci equamente</button>
+      <button class="btn-xs" onclick="resetVotes()">Azzera tutto</button>
+    </div>
+  </div>
+  <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">Inserisci i punti — il totale deve essere esattamente 100.</div>
+  <div id="grp-vote"></div>
+  <div class="btn-row">
+    <button class="btn-out" onclick="goPhase('select')">← Modifica selezione</button>
+    <button class="btn" id="btn-submit" onclick="submitVote()" disabled>Invia il mio voto</button>
+  </div>
+  <div id="vote-err" style="font-size:12px;color:var(--red);margin-top:8px;display:none"></div>
+</div>
+
+<div id="ph-done" style="display:none">
+  <div class="done-wrap">
+    <div class="done-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="done-h" id="done-name">Grazie!</div>
+    <div class="done-sub" id="done-sub">Il tuo voto è stato salvato.</div>
+    <div class="done-box" id="done-box"></div>
+    <div class="done-actions">
+      <button class="btn-out" id="btn-dl-backup" onclick="redownload()" style="display:none">Scarica copia locale</button>
+      <button class="btn-out" onclick="goPhase('intro');resetAll()">Nuovo voto</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- pane-vote -->
+
+<!-- ═══ TAB AGGREGA ════════════════════════════════════════ -->
+<div id="pane-agg" style="display:none">
+
+  <div id="agg-sp-section" style="display:none" class="card">
+    <div class="card-title">Carica da SharePoint</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">
+      Carica tutti i voti salvati nella cartella SharePoint configurata con un clic.
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="loadFromSharePoint()">
+        <span id="sp-load-txt">Carica voti da SharePoint</span>
+      </button>
+      <span id="sp-load-status" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Oppure carica file JSON manualmente</div>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-inp').click()"
+         ondragover="event.preventDefault();this.classList.add('over')"
+         ondragleave="this.classList.remove('over')"
+         ondrop="handleDrop(event)">
+      <div style="font-size:28px;margin-bottom:6px;opacity:.35">📂</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:3px">Trascina i file JSON qui o clicca per selezionare</div>
+      <div style="font-size:12px;color:var(--muted)">File .json scaricati come backup dai votanti</div>
+    </div>
+    <input type="file" id="file-inp" accept=".json" multiple style="display:none" onchange="handleFiles(this.files)">
+    <div id="file-chips-wrap" style="display:none">
+      <div id="file-chips" class="file-chips"></div>
+      <button class="btn-xs" onclick="clearAggData()">Rimuovi tutti</button>
+    </div>
+  </div>
+
+  <div id="agg-results" style="display:none">
+    <div class="card">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem">
+        <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Votanti</div>
+          <div style="font-size:22px;font-weight:600" id="agg-n-v">—</div>
+        </div>
+        <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Use case con voti</div>
+          <div style="font-size:22px;font-weight:600" id="agg-n-c">—</div>
+        </div>
+        <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Punti totali</div>
+          <div style="font-size:22px;font-weight:600" id="agg-tot">—</div>
+        </div>
+      </div>
+      <div class="card-title">Classifica aggregata</div>
+      <div id="agg-ranking"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Dettaglio per votante</div>
+      <div id="agg-detail"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="exportCSV()">Esporta CSV</button>
+    </div>
+  </div>
+
+  <div id="agg-empty" style="text-align:center;padding:3rem;color:var(--muted);font-size:14px">
+    Nessun dato ancora. Carica da SharePoint o trascina i file JSON.
+  </div>
+
+</div><!-- pane-agg -->
+</div><!-- .shell -->
+
+<script>
+// ════════════════════════════════════════════════════════
+// CONFIGURAZIONE — modifica questi valori prima di caricare
+// il file su SharePoint
+//
+// VOTES_FOLDER: percorso relativo al sito SharePoint della
+// cartella dove salvare i voti. Crea prima la cartella.
+// Esempio: '/sites/ai-project/Shared%20Documents/AI%20Votes'
+//
+// Lascia vuoto '' per usare solo il download locale.
+// ════════════════════════════════════════════════════════
+const VOTES_FOLDER = '/sites/AIExplorerCommunity/Documenti%20condivisi/General/20%20-%20Casi%20d%E2%80%99uso%20%26%20Innovazione/Valutazione%20priorit%C3%A0?csf=1&web=1&e=DTuB59';
+
+// ── Use cases ─────────────────────────────────────────────
+const GROUPS=[
+  {label:"Operations & Supply Chain",cases:[
+    {id:"AI001",name:"Predictive maintenance impianti",cons:false},
+    {id:"AI015",name:"Controllo errori Item Master, BOM e cicli",cons:false},
+    {id:"AI020",name:"Automazione scorte settimanali CV+PF",cons:false},
+    {id:"AI030",name:"Blend resilience (sostituzione componenti)",cons:false},
+  ]},
+  {label:"Procurement",cases:[
+    {id:"CONS-05",name:"★  Vendor Intelligence Hub  (AI002 + AI003 + AI004)",cons:true},
+    {id:"AI006",name:"Audit management fornitori",cons:false},
+    {id:"AI046",name:"RDA automatica (richiesta di acquisto)",cons:false},
+  ]},
+  {label:"Qualità & Regulatory",cases:[
+    {id:"AI005",name:"Analisi documentale conformità REACH/RoHS",cons:false},
+    {id:"CONS-06",name:"★  Packaging AI Suite  (AI026 + AI029)",cons:true},
+    {id:"AI033",name:"QuAIllyty in the CUP",cons:false},
+  ]},
+  {label:"Export, Logistica & ECS",cases:[
+    {id:"AI007",name:"Batch number declaration",cons:false},
+    {id:"AI011",name:"Pagamenti esteri ECS",cons:false},
+    {id:"AI018",name:"Agenti AI documenti doganali  (EUDR)",cons:false},
+    {id:"AI025",name:"Controllo fatture passive trasporto",cons:false},
+    {id:"CONS-04",name:"★  Order Intelligence Hub  (AI009 + AI010 + AI070)",cons:true},
+  ]},
+  {label:"Finance & Controlling",cases:[
+    {id:"AI012",name:"AI Agent suite crediti / contratti / assets",cons:false},
+    {id:"AI017",name:"Agente AI budget, forecast & ACT",cons:false},
+    {id:"CONS-03",name:"★  Invitalia AI Support  (AI008 + AI069)",cons:true},
+  ]},
+  {label:"Marketing, Sales & Digital",cases:[
+    {id:"AI024",name:"What's new professor  (scientific intelligence)",cons:false},
+    {id:"AI032",name:"Forecast & procurement macchine professionali",cons:false},
+    {id:"AI038",name:"ILLETTA Techbot  (assistente embedded)",cons:false},
+    {id:"AI039",name:"Visit PlAIanning  —  segretAIria virtuale sales",cons:false},
+    {id:"CONS-02",name:"★  ILLY GENIUS  (AI028 + AI031)",cons:true},
+    {id:"CONS-07",name:"★  Market Intelligence  (AI064 + AI065)",cons:true},
+  ]},
+  {label:"IT, Project Management & Trasversale",cases:[
+    {id:"AI013",name:"Gestione richieste facility management",cons:false},
+    {id:"AI016",name:"Assistant multilingue apertura item",cons:false},
+    {id:"AI019",name:"AI IT support chatbot",cons:false},
+    {id:"AI023",name:"BUDDY — vademecum digitale aziendale",cons:false},
+    {id:"CONS-01",name:"★  PM Copilot  (AI014 + AI027 + AI067)",cons:true},
+  ]},
+];
+const ALL_CASES=GROUPS.flatMap(g=>g.cases);
+
+// ── SharePoint helpers ─────────────────────────────────────
+const onSP = window.location.hostname.includes('.sharepoint.com');
+const spConfigured = onSP && VOTES_FOLDER && VOTES_FOLDER !== '';
+const siteRoot = onSP ? window.location.origin : '';
+
+async function spDigest(){
+  // Get SharePoint request digest (required for write operations)
+  const r=await fetch(`${siteRoot}/_api/contextinfo`,{
+    method:'POST',credentials:'include',
+    headers:{'Accept':'application/json;odata=verbose','Content-Type':'application/json;odata=verbose'}
+  });
+  const d=await r.json();
+  return d.d.GetContextWebInformation.FormDigestValue;
+}
+
+async function saveToSP(filename, content){
+  const digest = await spDigest();
+  const url=`${siteRoot}/_api/web/GetFolderByServerRelativeUrl('${VOTES_FOLDER}')/Files/add(url='${encodeURIComponent(filename)}',overwrite=true)`;
+  const r=await fetch(url,{
+    method:'POST',credentials:'include',
+    headers:{
+      'Accept':'application/json;odata=verbose',
+      'X-RequestDigest':digest,
+      'Content-Type':'text/plain; charset=utf-8'
+    },
+    body:content
+  });
+  if(!r.ok) throw new Error(`SP error ${r.status}`);
+  return true;
+}
+
+async function loadVotesFromSP(){
+  const url=`${siteRoot}/_api/web/GetFolderByServerRelativeUrl('${VOTES_FOLDER}')/Files?$select=Name,ServerRelativeUrl`;
+  const r=await fetch(url,{credentials:'include',headers:{'Accept':'application/json;odata=verbose'}});
+  if(!r.ok) throw new Error(`SP error ${r.status}`);
+  const d=await r.json();
+  const files=d.d.results.filter(f=>f.Name.endsWith('.json')&&f.Name.startsWith('voto_'));
+  const items=await Promise.all(files.map(f=>
+    fetch(`${siteRoot}${f.ServerRelativeUrl}`,{credentials:'include'})
+    .then(r=>r.json()).catch(()=>null)
+  ));
+  return items.filter(Boolean);
+}
+
+// ── Init ──────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  if(spConfigured){
+    document.getElementById('sp-ok-banner').style.display='flex';
+    document.getElementById('agg-sp-section').style.display='';
+  } else if(!onSP && VOTES_FOLDER===''){
+    document.getElementById('setup-warning').style.display='';
+  }
+});
+
+// ── Tab switch ─────────────────────────────────────────────
+function switchTab(t){
+  document.getElementById('pane-vote').style.display=t==='vote'?'':'none';
+  document.getElementById('pane-agg').style.display=t==='agg'?'':'none';
+  document.getElementById('tab-vote').classList.toggle('on',t==='vote');
+  document.getElementById('tab-agg').classList.toggle('on',t==='agg');
+}
+
+// ── Phase nav ──────────────────────────────────────────────
+function goPhase(id){
+  ['intro','select','vote','done'].forEach(p=>{
+    document.getElementById('ph-'+p).style.display=p===id?'':'none';
+  });
+  window.scrollTo(0,0);
+}
+function resetAll(){
+  selected=new Set();votes={};
+  document.getElementById('inp-name').value='';
+  document.getElementById('inp-role').value='';
+}
+
+// ── Voting state ───────────────────────────────────────────
+let voterName='',voterRole='';
+let selected=new Set(),votes={};
+let lastBlob=null,lastFilename='';
+
+function startSelect(){
+  voterName=document.getElementById('inp-name').value.trim();
+  voterRole=document.getElementById('inp-role').value.trim();
+  if(!voterName||!voterRole){document.getElementById('intro-err').style.display='';return;}
+  document.getElementById('intro-err').style.display='none';
+  renderSelectGroups();
+  goPhase('select');
+}
+
+function renderSelectGroups(){
+  const cont=document.getElementById('grp-sel');cont.innerHTML='';
+  GROUPS.forEach(g=>{
+    const div=document.createElement('div');div.className='card';div.style.marginBottom='10px';
+    div.innerHTML=`<div class="grp-hdr"><div class="grp-label">${g.label}</div>
+      <button class="btn-xs" onclick="toggleGrp('${g.label}')">Seleziona tutti</button></div>`;
+    g.cases.forEach(c=>{
+      const row=document.createElement('div');row.className='chk-row';row.onclick=()=>toggleCase(c.id);
+      row.innerHTML=`<div class="cb" id="cb-${c.id}"></div>
+        <span class="id-badge${c.cons?' cons':''}">${c.id}</span>
+        <span class="case-name${c.cons?' cons':''}">${c.name}</span>`;
+      div.appendChild(row);
+    });
+    cont.appendChild(div);
+  });
+}
+
+function toggleCase(id){
+  if(selected.has(id)){selected.delete(id);delete votes[id];document.getElementById('cb-'+id).className='cb';}
+  else{selected.add(id);votes[id]=0;document.getElementById('cb-'+id).className='cb on';}
+  updateSelCount();
+}
+function toggleGrp(label){
+  const g=GROUPS.find(x=>x.label===label);
+  const allOn=g.cases.every(c=>selected.has(c.id));
+  g.cases.forEach(c=>{if(allOn){selected.delete(c.id);delete votes[c.id];document.getElementById('cb-'+c.id).className='cb';}
+    else{selected.add(c.id);votes[c.id]=votes[c.id]||0;document.getElementById('cb-'+c.id).className='cb on';}});
+  updateSelCount();
+}
+function updateSelCount(){
+  const n=selected.size,el=document.getElementById('sel-count');
+  el.textContent=n+' selezionati';el.className='pill '+(n>0?'pill-green':'pill-gray');
+  document.getElementById('btn-to-vote').disabled=!n;
+}
+
+function startVote(){
+  if(!selected.size)return;
+  renderVoteGroups();goPhase('vote');updateTracker();
+}
+function renderVoteGroups(){
+  const cont=document.getElementById('grp-vote');cont.innerHTML='';
+  GROUPS.forEach(g=>{
+    const sel=g.cases.filter(c=>selected.has(c.id));if(!sel.length)return;
+    const div=document.createElement('div');div.className='card';
+    div.innerHTML=`<div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px">${g.label}</div>`;
+    sel.forEach(c=>{
+      const row=document.createElement('div');row.className='vote-row'+(c.cons?' cons-row':'');
+      row.innerHTML=`<span class="id-badge${c.cons?' cons':''}">${c.id}</span>
+        <span style="font-size:13px;line-height:1.4${c.cons?';font-weight:500':''}">${c.name}</span>
+        <span class="pct" id="pct-${c.id}"></span>
+        <input type="number" class="num-inp" id="v-${c.id}" min="0" max="100" value="" placeholder="0"
+          oninput="setVote('${c.id}',this.value)">`;
+      div.appendChild(row);
+    });
+    cont.appendChild(div);
+  });
+}
+function setVote(id,val){
+  const num=Math.max(0,parseInt(val)||0);
+  const other=Object.entries(votes).filter(([k])=>k!==id).reduce((a,[,b])=>a+(parseInt(b)||0),0);
+  const capped=Math.min(num,100-other);
+  votes[id]=capped;
+  const inp=document.getElementById('v-'+id);
+  if(inp&&capped!==num)inp.value=capped||'';
+  if(inp)inp.classList.toggle('has-val',capped>0);
+  updateTracker();
+}
+function updateTracker(){
+  const tot=Object.values(votes).reduce((a,b)=>a+(parseInt(b)||0),0);
+  const rem=100-tot;
+  const nu=document.getElementById('trk-n');
+  nu.textContent=tot;nu.style.color=rem<0?'var(--red)':rem===0?'var(--green)':'var(--text)';
+  const pill=document.getElementById('trk-pill');
+  if(rem===0){pill.textContent='✓ Pronto';pill.className='pill pill-green';}
+  else if(rem<0){pill.textContent=Math.abs(rem)+' in eccesso';pill.className='pill pill-red';}
+  else{pill.textContent=rem+' da distribuire';pill.className='pill pill-gray';}
+  const bar=document.getElementById('trk-bar');
+  bar.style.width=Math.min(100,tot)+'%';
+  bar.style.background=rem<0?'var(--red)':rem===0?'var(--green)':'#378ADD';
+  document.getElementById('btn-submit').disabled=(rem!==0);
+  if(tot>0)selected.forEach(id=>{
+    const el=document.getElementById('pct-'+id);
+    const v=parseInt(votes[id])||0;
+    if(el)el.textContent=v>0?Math.round(v/tot*100)+'%':'';
+  });
+}
+function distEvenly(){
+  const ids=[...selected];if(!ids.length)return;
+  const base=Math.floor(100/ids.length),rem=100-base*ids.length;
+  ids.forEach((id,i)=>{votes[id]=base+(i<rem?1:0);const inp=document.getElementById('v-'+id);if(inp){inp.value=votes[id];inp.classList.add('has-val');}});
+  updateTracker();
+}
+function resetVotes(){
+  selected.forEach(id=>{votes[id]=0;const inp=document.getElementById('v-'+id);if(inp){inp.value='';inp.classList.remove('has-val');}});
+  updateTracker();
+}
+
+// ── Submit ─────────────────────────────────────────────────
+async function submitVote(){
+  const tot=Object.values(votes).reduce((a,b)=>a+(parseInt(b)||0),0);
+  if(tot!==100)return;
+
+  const record={name:voterName,role:voterRole,timestamp:new Date().toISOString(),
+    votes:Object.fromEntries(Object.entries(votes).filter(([,v])=>parseInt(v)>0))};
+  const json=JSON.stringify(record,null,2);
+  const date=new Date().toISOString().slice(0,10);
+  const fname=`voto_${voterName.replace(/\s+/g,'_')}_${date}.json`;
+
+  lastBlob=new Blob([json],{type:'application/json'});
+  lastFilename=fname;
+
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true;btn.textContent='Salvataggio…';
+
+  let saved=false,spError='';
+  if(spConfigured){
+    try{
+      await saveToSP(fname,json);
+      saved=true;
+    }catch(e){
+      spError=e.message;
+    }
+  }
+
+  // Show done screen
+  document.getElementById('done-name').textContent='Grazie, '+voterName.split(' ')[0]+'!';
+  const dlBtn=document.getElementById('btn-dl-backup');
+
+  if(saved){
+    document.getElementById('done-sub').textContent='Il tuo voto è stato salvato automaticamente su SharePoint.';
+    document.getElementById('done-box').innerHTML=
+      `<strong style="display:block;margin-bottom:6px">Voto salvato</strong>
+      Il file <code style="background:white;padding:1px 6px;border-radius:3px;font-size:11px">${fname}</code>
+      è ora disponibile nella cartella SharePoint configurata. Non devi fare altro.`;
+    dlBtn.style.display='inline-block';
+    dlBtn.textContent='Scarica copia locale (opzionale)';
+  } else if(spConfigured && spError){
+    document.getElementById('done-sub').textContent='Errore nel salvataggio su SharePoint. Usa il backup locale.';
+    document.getElementById('done-box').innerHTML=
+      `<strong style="display:block;margin-bottom:6px;color:var(--red-d)">Errore SharePoint</strong>
+      ${spError}. Scarica il file JSON e invialo manualmente al coordinatore.`;
+    dlBtn.style.display='inline-block';
+    dlBtn.textContent='Scarica JSON e invialo al coordinatore';
+    triggerDownload(lastBlob,fname);
+  } else {
+    // No SP configured — always download
+    document.getElementById('done-sub').textContent='Il tuo file di voto è stato scaricato.';
+    document.getElementById('done-box').innerHTML=
+      `<strong style="display:block;margin-bottom:6px">Prossimo passo</strong>
+      Invia il file <code style="background:white;padding:1px 6px;border-radius:3px;font-size:11px">${fname}</code>
+      al coordinatore via email o Teams.`;
+    dlBtn.style.display='inline-block';
+    dlBtn.textContent='Riscarica il file';
+    triggerDownload(lastBlob,fname);
+  }
+
+  btn.disabled=false;btn.textContent='Invia il mio voto';
+  goPhase('done');
+}
+function redownload(){if(lastBlob)triggerDownload(lastBlob,lastFilename);}
+function triggerDownload(blob,name){
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+}
+
+// ── Aggregator ─────────────────────────────────────────────
+let aggData=[];
+
+async function loadFromSharePoint(){
+  const btn=document.getElementById('sp-load-txt');
+  const status=document.getElementById('sp-load-status');
+  btn.innerHTML='<span class="spinner"></span> Caricamento…';
+  status.textContent='';
+  try{
+    const items=await loadVotesFromSP();
+    items.forEach(d=>{if(!aggData.find(x=>x.name===d.name&&x.timestamp===d.timestamp))aggData.push(d);});
+    status.textContent=`${items.length} file caricati`;
+    renderAgg();
+  }catch(e){
+    status.style.color='var(--red)';
+    status.textContent='Errore: '+e.message+'. Verifica il percorso VOTES_FOLDER e che la cartella esista.';
+  }
+  btn.textContent='Carica voti da SharePoint';
+}
+
+function handleDrop(e){
+  e.preventDefault();document.getElementById('drop-zone').classList.remove('over');
+  handleFiles(e.dataTransfer.files);
+}
+function handleFiles(files){
+  Promise.all([...files].map(f=>f.text().then(t=>{try{const d=JSON.parse(t);if(d.name&&d.votes)return d;}catch(e){}return null;}))).then(res=>{
+    res.filter(Boolean).forEach(d=>{if(!aggData.find(x=>x.name===d.name&&x.timestamp===d.timestamp))aggData.push(d);});
+    renderAgg();
+  });
+}
+function clearAggData(){aggData=[];renderAgg();}
+
+function renderAgg(){
+  const fw=document.getElementById('file-chips-wrap');
+  const ae=document.getElementById('agg-empty');
+  const ar=document.getElementById('agg-results');
+  if(!aggData.length){fw.style.display='none';ae.style.display='';ar.style.display='';document.getElementById('agg-ranking').innerHTML='';return;}
+  fw.style.display='';ae.style.display='none';ar.style.display='';
+  document.getElementById('file-chips').innerHTML=aggData.map(d=>`<span class="file-chip">${d.name}</span>`).join('');
+
+  const totals={};
+  aggData.forEach(d=>Object.entries(d.votes).forEach(([id,pts])=>{totals[id]=(totals[id]||0)+(parseInt(pts)||0);}));
+  const maxPts=Math.max(...Object.values(totals),1);
+  const totalAllPts=Object.values(totals).reduce((a,b)=>a+b,0);
+  const ranked=ALL_CASES.map(c=>({...c,pts:totals[c.id]||0})).filter(c=>c.pts>0).sort((a,b)=>b.pts-a.pts);
+
+  document.getElementById('agg-n-v').textContent=aggData.length;
+  document.getElementById('agg-n-c').textContent=ranked.length;
+  document.getElementById('agg-tot').textContent=totalAllPts;
+
+  document.getElementById('agg-ranking').innerHTML=ranked.map((c,i)=>{
+    const pct=Math.round(c.pts/maxPts*100);
+    const share=totalAllPts>0?(c.pts/totalAllPts*100).toFixed(1):'0';
+    const col=i===0?'var(--red)':i<3?'var(--amber)':'var(--blue)';
+    return `<div class="res-row">
+      <span style="font-size:12px;color:var(--muted);text-align:center">${i+1}</span>
+      <span class="id-badge${c.cons?' cons':''}">${c.id}</span>
+      <div><div style="font-size:13px${c.cons?';font-weight:500':''}">${c.name}</div>
+        <div class="res-bar-bg"><div class="res-bar" style="width:${pct}%;background:${col}"></div></div></div>
+      <div style="text-align:right">
+        <div style="font-size:14px;font-weight:600">${c.pts}<span style="font-size:10px;color:var(--muted)">pt</span></div>
+        <div style="font-size:11px;color:var(--muted)">${share}%</div>
+      </div></div>`;
+  }).join('');
+
+  document.getElementById('agg-detail').innerHTML=aggData.map(d=>{
+    const top=Object.entries(d.votes).sort(([,a],[,b])=>b-a).slice(0,3).map(([id,v])=>`${id} (${v}pt)`).join(' · ');
+    return `<div style="padding:8px 0;border-bottom:.5px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px">
+        <span style="font-size:13px;font-weight:500">${d.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${d.role} · ${new Date(d.timestamp).toLocaleDateString('it-IT')}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted)">Top 3: ${top}</div></div>`;
+  }).join('');
+}
+
+function exportCSV(){
+  if(!aggData.length)return;
+  const totals={};
+  aggData.forEach(d=>Object.entries(d.votes).forEach(([id,pts])=>{totals[id]=(totals[id]||0)+(parseInt(pts)||0);}));
+  const totalPts=Object.values(totals).reduce((a,b)=>a+b,0);
+  let csv='Rank,ID,Nome,Punti totali,% del totale\n';
+  ALL_CASES.map(c=>({...c,pts:totals[c.id]||0})).sort((a,b)=>b.pts-a.pts).forEach((c,i)=>{
+    if(c.pts>0)csv+=`${i+1},"${c.id}","${c.name}",${c.pts},${totalPts>0?(c.pts/totalPts*100).toFixed(1):'0'}%\n`;
+  });
+  csv+='\nVotante,Ruolo,Data\n';
+  aggData.forEach(d=>csv+=`"${d.name}","${d.role}","${new Date(d.timestamp).toLocaleDateString('it-IT')}"\n`);
+  triggerDownload(new Blob([csv],{type:'text/csv;charset=utf-8'}),`risultati_ai_vote_${new Date().toISOString().slice(0,10)}.csv`);
+}
+</script>
+</body>
+</html>
