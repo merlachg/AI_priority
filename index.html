@@ -17,14 +17,11 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
-.shell{max-width:740px;margin:0 auto;padding:1.5rem 1rem 5rem}
+.shell{max-width:760px;margin:0 auto;padding:1.5rem 1rem 5rem}
 .hdr{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
 .hdr-dot{width:36px;height:36px;border-radius:8px;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .eyebrow{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
 .pg-title{font-size:18px;font-weight:600}
-.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:1.5rem}
-.tab{padding:8px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
-.tab.on{color:var(--red);border-bottom-color:var(--red)}
 .card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem}
 .card-title{font-size:15px;font-weight:600;margin-bottom:12px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
@@ -33,25 +30,39 @@ body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--
 .step-t{font-size:13px;font-weight:600;margin-bottom:3px}
 .step-d{font-size:12px;color:var(--muted);line-height:1.5}
 .info-box{background:var(--red-l);border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--red-d);line-height:1.5}
-.setup-box{background:var(--amber-l);border:.5px solid var(--gold-b);border-radius:var(--r-sm);padding:12px 16px;font-size:13px;line-height:1.6;margin-bottom:1rem}
-.setup-box code{background:white;padding:1px 6px;border-radius:3px;font-size:11px;font-family:'Courier New',monospace}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
 label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
 input[type=text]{width:100%;border:.5px solid #C8C6BF;border-radius:var(--r-sm);padding:9px 12px;font-size:14px;color:var(--text);background:var(--surface);outline:none;font-family:inherit;transition:border-color .15s}
 input[type=text]:focus{border-color:var(--red)}
+textarea{width:100%;border:.5px solid #C8C6BF;border-radius:var(--r-sm);padding:10px 12px;font-size:13px;color:var(--text);background:var(--surface);outline:none;font-family:inherit;resize:vertical;line-height:1.6;transition:border-color .15s}
+textarea:focus{border-color:var(--red)}
 .phase-bar{display:flex;gap:6px;align-items:center;margin-bottom:1.25rem;font-size:12px}
 .ph{color:var(--faint)}.ph.on{color:var(--text);font-weight:600}.ph-sep{color:var(--border)}
 .grp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .grp-label{font-size:13px;font-weight:600}
 .btn-xs{background:var(--bg);color:var(--muted);border:.5px solid var(--border);border-radius:5px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:inherit}
 .btn-xs:hover{background:#ECEAE3}
-.chk-row{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;user-select:none}
-.chk-row:hover{opacity:.8}
-.cb{width:18px;height:18px;border-radius:4px;border:1.5px solid #C8C6BF;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+
+/* ── Checkbox rows ── */
+.chk-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;cursor:pointer;user-select:none;border-bottom:.5px solid var(--border)}
+.chk-row:last-child{border-bottom:none}
+.cb{width:18px;height:18px;border-radius:4px;border:1.5px solid #C8C6BF;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .12s}
 .cb.on{background:var(--red);border-color:var(--red)}
-.id-badge{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--bg);color:var(--muted);border:.5px solid var(--border);flex-shrink:0;letter-spacing:.02em}
+.case-info{flex:1;min-width:0}
+.id-badge{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--bg);color:var(--muted);border:.5px solid var(--border);display:inline-block;margin-bottom:4px;letter-spacing:.02em}
 .id-badge.cons{background:var(--gold-l);color:var(--gold);border-color:var(--gold-b)}
-.case-name{font-size:13px}.case-name.cons{font-weight:500}
+.case-name{font-size:13px;font-weight:500;display:block;margin-bottom:4px;line-height:1.4}
+.chk-row:hover .case-name{color:var(--red)}
+.case-name.cons{color:var(--gold)}
+
+/* ── Abstract with expand ── */
+.abstract-wrap{font-size:12px;color:var(--muted);line-height:1.6}
+.abstract-rest{display:none}
+.abstract-rest.open{display:inline}
+.abs-btn{background:none;border:none;color:var(--blue);font-size:12px;cursor:pointer;padding:0;font-family:inherit;font-weight:500;white-space:nowrap}
+.abs-btn:hover{text-decoration:underline}
+
+/* ── Tracker ── */
 .tracker{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:1rem;position:sticky;top:8px;z-index:10;box-shadow:0 2px 16px rgba(0,0,0,.07)}
 .trk-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .pts-big{font-size:22px;font-weight:600}
@@ -59,42 +70,55 @@ input[type=text]:focus{border-color:var(--red)}
 .pill-gray{background:var(--bg);color:var(--muted)}
 .pill-green{background:var(--green-l);color:var(--green)}
 .pill-red{background:var(--red-l);color:var(--red-d)}
-.pill-blue{background:var(--blue-l);color:var(--blue)}
 .prog-track{height:5px;background:var(--border);border-radius:3px;margin-bottom:8px}
 .prog-fill{height:5px;border-radius:3px;transition:width .2s,background .3s}
 .trk-actions{display:flex;gap:8px}
-.vote-row{display:grid;grid-template-columns:62px 1fr 36px 68px;gap:8px;align-items:center;padding:7px 0;border-bottom:.5px solid var(--border)}
+
+/* ── Vote rows ── */
+.vote-row{display:grid;grid-template-columns:1fr 72px;gap:14px;align-items:start;padding:12px 0;border-bottom:.5px solid var(--border)}
 .vote-row:last-child{border-bottom:none}
-.vote-row.cons-row{background:linear-gradient(90deg,var(--gold-l),transparent);padding-left:4px;margin:0 -4px;padding-right:4px}
-.pct{font-size:11px;color:var(--faint);text-align:right}
-.num-inp{border:.5px solid #C8C6BF;border-radius:5px;padding:5px 0;font-size:15px;font-weight:600;text-align:center;width:100%;outline:none;font-family:inherit;color:var(--text);background:var(--surface);transition:all .15s}
-.num-inp:focus{border-color:var(--red)}
-.num-inp.has-val{background:var(--green-l);border-color:var(--green)}
+.vote-row.cons-row{background:linear-gradient(90deg,var(--gold-l) 0%,transparent 60%);padding-left:8px;margin:0 -8px;padding-right:8px}
+.vote-left{min-width:0}
+.vote-meta{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.vote-name{font-size:13px;font-weight:500;line-height:1.4;margin-bottom:5px}
+.vote-name.cons{color:var(--gold)}
+.vote-right{display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:4px}
+.num-inp{border:.5px solid #C8C6BF;border-radius:6px;padding:7px 0;font-size:17px;font-weight:600;text-align:center;width:72px;outline:none;font-family:inherit;color:var(--text);background:var(--surface);transition:all .15s}
+.num-inp:focus{border-color:var(--red);box-shadow:0 0 0 2px var(--red-l)}
+.num-inp.has-val{background:var(--green-l);border-color:var(--green);color:var(--green)}
+.pct-label{font-size:11px;color:var(--faint)}
+
+/* ── Notes section ── */
+.notes-section{margin-top:.25rem}
+.notes-label{font-size:13px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.notes-optional{font-size:11px;color:var(--faint);font-weight:400}
+.notes-hint{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5}
+
+/* ── Buttons ── */
 .btn{background:var(--red);color:white;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
 .btn:hover{opacity:.88}
 .btn:disabled{background:#C8C6BF;cursor:not-allowed;opacity:1}
 .btn-out{background:transparent;color:var(--text);border:.5px solid #C8C6BF;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-family:inherit}
 .btn-out:hover{background:var(--bg)}
 .btn-row{display:flex;gap:10px;align-items:center;padding-top:4px;flex-wrap:wrap}
-.done-wrap{text-align:center;padding:2.5rem 1rem}
+
+/* ── Done ── */
+.done-wrap{padding:2rem 0}
 .done-icon{width:56px;height:56px;border-radius:50%;background:var(--green-l);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
-.done-h{font-size:20px;font-weight:600;margin-bottom:8px}
-.done-sub{font-size:14px;color:var(--muted);max-width:400px;margin:0 auto 1.5rem;line-height:1.6}
-.done-box{background:var(--blue-l);border:.5px solid #B5D4F4;border-radius:var(--r-sm);padding:14px 18px;text-align:left;font-size:13px;line-height:1.7;margin:0 auto 1.25rem;max-width:480px}
-.done-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.sp-banner{background:var(--green-l);border:.5px solid var(--green);border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:#0F6E56;display:flex;align-items:center;gap:8px;margin-bottom:1rem}
-.agg-load-row{display:flex;gap:10px;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
-.drop-zone{border:2px dashed var(--border);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:1rem}
-.drop-zone:hover,.drop-zone.over{border-color:var(--red);background:var(--red-l)}
-.file-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem}
-.file-chip{background:var(--green-l);color:var(--green);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:500}
-.res-row{display:grid;grid-template-columns:28px 70px 1fr 70px;gap:8px;align-items:center;padding:6px 0;border-bottom:.5px solid var(--border)}
-.res-row:last-child{border-bottom:none}
-.res-bar-bg{height:4px;background:var(--border);border-radius:3px;margin-top:3px}
-.res-bar{height:4px;border-radius:3px}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:500px){.steps{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.vote-row{grid-template-columns:54px 1fr 60px}.pct{display:none}}
+.done-h{font-size:20px;font-weight:600;margin-bottom:8px;text-align:center}
+.done-sub{font-size:14px;color:var(--muted);max-width:480px;margin:0 auto 1.5rem;line-height:1.6;text-align:center}
+.next-box{background:var(--blue-l);border:.5px solid #B5D4F4;border-radius:var(--r);padding:20px 24px;margin-bottom:1rem}
+.next-label{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.next-title{font-size:15px;font-weight:600;margin-bottom:8px}
+.next-body{font-size:13px;color:var(--muted);line-height:1.7}
+.sp-btn{display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:white;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;margin-top:14px;transition:opacity .15s}
+.sp-btn:hover{opacity:.88}
+.done-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.25rem}
+
+@media(max-width:520px){
+  .steps{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}
+  .vote-row{grid-template-columns:1fr 64px}.num-inp{width:64px}
+}
 </style>
 </head>
 <body>
@@ -105,37 +129,20 @@ input[type=text]:focus{border-color:var(--red)}
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="1.5"/><path d="M9 5v4l2.5 2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
   </div>
   <div>
-    <div class="eyebrow">illycaffè — AI Strategy</div>
+    <div class="eyebrow">illycaffè — AI Explorer Community</div>
     <div class="pg-title">Prioritizzazione Use Case AI</div>
   </div>
 </div>
 
-<div class="tabs">
-  <div class="tab on" id="tab-vote" onclick="switchTab('vote')">Vota</div>
-  <div class="tab" id="tab-agg" onclick="switchTab('agg')">Aggrega risultati</div>
-</div>
-
-<!-- ═══ TAB VOTA ══════════════════════════════════════════ -->
-<div id="pane-vote">
-
+<!-- INTRO -->
 <div id="ph-intro">
-  <div id="setup-warning" style="display:none" class="setup-box">
-    <strong>⚙️ Configurazione necessaria</strong> — Il file non è ancora collegato a SharePoint.
-    Apri il file in un editor di testo e imposta la variabile <code>VOTES_FOLDER</code> con il percorso della cartella
-    dove salvare i voti (es. <code>/sites/ai-project/Shared%20Documents/AI%20Votes</code>), poi ricarica.
-    Oppure usa il pulsante "Scarica JSON" come backup.
-  </div>
-  <div id="sp-ok-banner" style="display:none" class="sp-banner">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="#1D9E75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Connesso a SharePoint — i voti verranno salvati automaticamente nella cartella configurata.
-  </div>
   <div class="card">
     <div class="steps">
-      <div class="step"><div class="step-n">STEP 1</div><div class="step-t">Scegli</div><div class="step-d">Seleziona i use case che conosci</div></div>
-      <div class="step"><div class="step-n">STEP 2</div><div class="step-t">Alloca</div><div class="step-d">Distribuisci esattamente 100 punti</div></div>
-      <div class="step"><div class="step-n">STEP 3</div><div class="step-t">Invia</div><div class="step-d">Il voto si salva su SharePoint in automatico</div></div>
+      <div class="step"><div class="step-n">STEP 1</div><div class="step-t">Scegli</div><div class="step-d">Seleziona i use case a cui vuoi assegnare dei punti priorità</div></div>
+      <div class="step"><div class="step-n">STEP 2</div><div class="step-t">Alloca</div><div class="step-d">Distribuisci esattamente 100 punti tra i casi selezionati</div></div>
+      <div class="step"><div class="step-n">STEP 3</div><div class="step-t">Carica su SharePoint</div><div class="step-d">Scarica il file JSON e caricalo nella cartella SharePoint indicata</div></div>
     </div>
-    <div class="info-box">I casi con <strong>★</strong> sono use case consolidati. Concentra i punti sui casi più urgenti per la tua funzione — non devi votarli tutti.</div>
+    <div class="info-box">I casi con <strong>★</strong> sono use case consolidati che raggruppano più progetti. Leggi le descrizioni per capire cosa comprende ciascuno prima di votare.</div>
   </div>
   <div class="card">
     <div class="card-title">Prima di iniziare</div>
@@ -150,24 +157,28 @@ input[type=text]:focus{border-color:var(--red)}
   </div>
 </div>
 
+<!-- SELECT -->
 <div id="ph-select" style="display:none">
-  <div class="phase-bar"><span class="ph on">Selezione</span><span class="ph-sep">›</span><span class="ph">Allocazione</span><span class="ph-sep">›</span><span class="ph">Invio</span></div>
+  <div class="phase-bar"><span class="ph on">Selezione</span><span class="ph-sep">›</span><span class="ph">Allocazione</span><span class="ph-sep">›</span><span class="ph">Carica</span></div>
   <div class="card" style="padding-bottom:.5rem">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
       <div class="card-title" style="margin:0">Scegli i use case</div>
       <span id="sel-count" class="pill pill-gray">0 selezionati</span>
     </div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">Seleziona solo i casi che conosci o che impattano la tua funzione.</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;line-height:1.5">
+      Seleziona tutti i casi a cui vuoi assegnare dei punti priorità. Clicca <strong>Leggi tutto</strong> per leggere la descrizione completa di ciascun use case.
+    </p>
     <div id="grp-sel"></div>
-    <div class="btn-row" style="padding-top:12px">
+    <div class="btn-row" style="padding-top:14px;border-top:.5px solid var(--border);margin-top:4px">
       <button class="btn-out" onclick="goPhase('intro')">← Indietro</button>
       <button class="btn" id="btn-to-vote" onclick="startVote()" disabled>Alloca i punti →</button>
     </div>
   </div>
 </div>
 
+<!-- VOTE -->
 <div id="ph-vote" style="display:none">
-  <div class="phase-bar"><span class="ph">Selezione</span><span class="ph-sep">›</span><span class="ph on">Allocazione</span><span class="ph-sep">›</span><span class="ph">Invio</span></div>
+  <div class="phase-bar"><span class="ph">Selezione</span><span class="ph-sep">›</span><span class="ph on">Allocazione</span><span class="ph-sep">›</span><span class="ph">Carica</span></div>
   <div class="tracker">
     <div class="trk-top">
       <div><span class="pts-big" id="trk-n">0</span><span style="font-size:13px;color:var(--muted)"> / 100 punti</span></div>
@@ -179,239 +190,148 @@ input[type=text]:focus{border-color:var(--red)}
       <button class="btn-xs" onclick="resetVotes()">Azzera tutto</button>
     </div>
   </div>
-  <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">Inserisci i punti — il totale deve essere esattamente 100.</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.5">
+    Inserisci i punti per ogni use case. Il totale deve essere esattamente 100.
+  </p>
   <div id="grp-vote"></div>
-  <div class="btn-row">
-    <button class="btn-out" onclick="goPhase('select')">← Modifica selezione</button>
-    <button class="btn" id="btn-submit" onclick="submitVote()" disabled>Invia il mio voto</button>
+
+  <!-- Notes -->
+  <div class="card notes-section">
+    <div class="notes-label">
+      Note e motivazioni
+      <span class="notes-optional">opzionale</span>
+    </div>
+    <p class="notes-hint">Vuoi spiegare le tue scelte o aggiungere contesto ai punteggi assegnati? Scrivi qui sotto — il testo verrà incluso nel file di voto.</p>
+    <textarea id="vote-notes" rows="4" placeholder="Es: Ho dato priorità ai casi Operations perché sono quelli che impattano direttamente il mio lavoro quotidiano. Il caso AI018 mi sembra urgente per via della scadenza EUDR..."></textarea>
   </div>
-  <div id="vote-err" style="font-size:12px;color:var(--red);margin-top:8px;display:none"></div>
+
+  <div class="btn-row" style="margin-top:.25rem">
+    <button class="btn-out" onclick="goPhase('select')">← Modifica selezione</button>
+    <button class="btn" id="btn-submit" onclick="submitVote()" disabled>Scarica il file voto</button>
+  </div>
 </div>
 
+<!-- DONE -->
 <div id="ph-done" style="display:none">
   <div class="done-wrap">
-    <div class="done-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="done-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
     <div class="done-h" id="done-name">Grazie!</div>
-    <div class="done-sub" id="done-sub">Il tuo voto è stato salvato.</div>
-    <div class="done-box" id="done-box"></div>
+    <div class="done-sub">Il file con il tuo voto è stato scaricato. Ora caricalo su SharePoint seguendo le istruzioni qui sotto.</div>
+    <div class="next-box">
+      <div class="next-label">Prossimo passo</div>
+      <div class="next-title">Carica il file nella cartella SharePoint</div>
+      <div class="next-body">
+        Hai scaricato il file <code id="done-filename" style="background:white;border:.5px solid #C8C6BF;padding:2px 8px;border-radius:4px;font-size:12px;font-family:'Courier New',monospace"></code>.<br><br>
+        Clicca il pulsante qui sotto per aprire la cartella SharePoint, poi trascinaci il file oppure usa il pulsante <strong>Carica</strong> in alto nella pagina.
+      </div>
+      <a id="sp-link" href="#" target="_blank" class="sp-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="white" stroke-width="1.3"/><path d="M5 8h6M8 5l3 3-3 3" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Apri cartella SharePoint
+      </a>
+    </div>
     <div class="done-actions">
-      <button class="btn-out" id="btn-dl-backup" onclick="redownload()" style="display:none">Scarica copia locale</button>
+      <button class="btn-out" onclick="redownload()">Riscarica il file</button>
       <button class="btn-out" onclick="goPhase('intro');resetAll()">Nuovo voto</button>
     </div>
   </div>
 </div>
 
-</div><!-- pane-vote -->
-
-<!-- ═══ TAB AGGREGA ════════════════════════════════════════ -->
-<div id="pane-agg" style="display:none">
-
-  <div id="agg-sp-section" style="display:none" class="card">
-    <div class="card-title">Carica da SharePoint</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">
-      Carica tutti i voti salvati nella cartella SharePoint configurata con un clic.
-    </div>
-    <div class="btn-row">
-      <button class="btn" onclick="loadFromSharePoint()">
-        <span id="sp-load-txt">Carica voti da SharePoint</span>
-      </button>
-      <span id="sp-load-status" style="font-size:12px;color:var(--muted)"></span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Oppure carica file JSON manualmente</div>
-    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-inp').click()"
-         ondragover="event.preventDefault();this.classList.add('over')"
-         ondragleave="this.classList.remove('over')"
-         ondrop="handleDrop(event)">
-      <div style="font-size:28px;margin-bottom:6px;opacity:.35">📂</div>
-      <div style="font-size:13px;font-weight:500;margin-bottom:3px">Trascina i file JSON qui o clicca per selezionare</div>
-      <div style="font-size:12px;color:var(--muted)">File .json scaricati come backup dai votanti</div>
-    </div>
-    <input type="file" id="file-inp" accept=".json" multiple style="display:none" onchange="handleFiles(this.files)">
-    <div id="file-chips-wrap" style="display:none">
-      <div id="file-chips" class="file-chips"></div>
-      <button class="btn-xs" onclick="clearAggData()">Rimuovi tutti</button>
-    </div>
-  </div>
-
-  <div id="agg-results" style="display:none">
-    <div class="card">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem">
-        <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Votanti</div>
-          <div style="font-size:22px;font-weight:600" id="agg-n-v">—</div>
-        </div>
-        <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Use case con voti</div>
-          <div style="font-size:22px;font-weight:600" id="agg-n-c">—</div>
-        </div>
-        <div style="background:var(--bg);border-radius:var(--r-sm);padding:12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Punti totali</div>
-          <div style="font-size:22px;font-weight:600" id="agg-tot">—</div>
-        </div>
-      </div>
-      <div class="card-title">Classifica aggregata</div>
-      <div id="agg-ranking"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Dettaglio per votante</div>
-      <div id="agg-detail"></div>
-    </div>
-    <div class="btn-row">
-      <button class="btn" onclick="exportCSV()">Esporta CSV</button>
-    </div>
-  </div>
-
-  <div id="agg-empty" style="text-align:center;padding:3rem;color:var(--muted);font-size:14px">
-    Nessun dato ancora. Carica da SharePoint o trascina i file JSON.
-  </div>
-
-</div><!-- pane-agg -->
-</div><!-- .shell -->
-
+</div>
 <script>
-// ════════════════════════════════════════════════════════
-// CONFIGURAZIONE — modifica questi valori prima di caricare
-// il file su SharePoint
-//
-// VOTES_FOLDER: percorso relativo al sito SharePoint della
-// cartella dove salvare i voti. Crea prima la cartella.
-// Esempio: '/sites/ai-project/Shared%20Documents/AI%20Votes'
-//
-// Lascia vuoto '' per usare solo il download locale.
-// ════════════════════════════════════════════════════════
-const VOTES_FOLDER = '/sites/AIExplorerCommunity/Documenti%20condivisi/General/20%20-%20Casi%20d%E2%80%99uso%20%26%20Innovazione/Valutazione%20priorit%C3%A0?csf=1&web=1&e=DTuB59';
-
-// ── Use cases ─────────────────────────────────────────────
-const GROUPS=[
-  {label:"Operations & Supply Chain",cases:[
-    {id:"AI001",name:"Predictive maintenance impianti",cons:false},
-    {id:"AI015",name:"Controllo errori Item Master, BOM e cicli",cons:false},
-    {id:"AI020",name:"Automazione scorte settimanali CV+PF",cons:false},
-    {id:"AI030",name:"Blend resilience (sostituzione componenti)",cons:false},
+const GROUPS = [
+  {label:"Operations & Supply Chain", cases:[
+    {id:"AI001", name:"Predictive Maintenance", cons:false, abstract:"Sistema di manutenzione predittiva basato su ML che analizza dati storici di guasti, parametri di processo (temperatura, vibrazioni, ecc.) e dati SCADA/PLC degli impianti produttivi (tostatrici, linee di confezionamento, robotica) per anticipare i guasti, ridurre i fermi macchina imprevisti e ottimizzare i costi di manutenzione, oggi ancora prevalentemente reattiva o \"a calendario\"."},
+    {id:"AI015", name:"Controllo errori Item Master, BOM e cicli", cons:false, abstract:"Sistema AI di anomaly detection che analizza i dati di anagrafica articoli, distinte base e cicli produttivi su JDE, segnalando automaticamente valori anomali o incoerenti rispetto ai range attesi e ai prodotti comparabili, per intercettare errori in fase di inserimento prima che impattino sui processi a valle."},
+    {id:"AI020", name:"Automazione scorte settimanali CV+PF", cons:false, abstract:"Automazione del processo di estrazione, consolidamento e aggiornamento settimanale delle scorte di caffè verde e prodotto finito, oggi svolto manualmente attraverso lancio report, estrazioni, rielaborazioni ed inserimento in un file di tracciamento."},
+    {id:"AI030", name:"Blend resilience (sostituzione componenti)", cons:false, abstract:"Soluzione AI a supporto della formulazione e ottimizzazione del blend di caffè (la miscela illy), che utilizza dati sensoriali, parametri di tostatura e caratteristiche delle origini per simulare scenari alternativi di blending in risposta a variazioni di disponibilità, qualità o prezzo del caffè verde, garantendo la costanza del profilo qualitativo."},
   ]},
-  {label:"Procurement",cases:[
-    {id:"CONS-05",name:"★  Vendor Intelligence Hub  (AI002 + AI003 + AI004)",cons:true},
-    {id:"AI006",name:"Audit management fornitori",cons:false},
-    {id:"AI046",name:"RDA automatica (richiesta di acquisto)",cons:false},
+  {label:"Procurement", cases:[
+    {id:"CONS-05", name:"★  Vendor Intelligence Hub  (AI002 + AI003 + AI004)", cons:true, abstract:"Piattaforma AI unificata per la gestione intelligente del parco fornitori, che copre l'intero ciclo di vita dalla selezione al monitoraggio. Automatizza lo scouting di nuovi fornitori e il monitoraggio dei prezzi delle materie prime tramite analisi continua di fonti pubbliche e proprietarie (AI003); esegue lo screening automatico di fornitori e clienti su liste sanzionatorie internazionali con verifica di anagrafiche e IBAN (AI002); e aggrega in un profilo dinamico e unificato tutti i dati di valutazione (Vendor Rating, ESG, audit, certificazioni), con analisi predittive su rischi e alert automatici (AI004). Il risultato è una visione completa, tempestiva e oggettiva del fornitore a supporto delle decisioni di sourcing e compliance."},
+    {id:"AI006", name:"Audit management fornitori", cons:false, abstract:"Sistema AI che struttura e automatizza l'intero processo di audit fornitori, oggi gestito in modo frammentato dalle singole funzioni: definizione delle priorità basata sul rischio, pianificazione dinamica del calendario visite, generazione di questionari modulabili per profilo fornitore, analisi degli esiti con rilevamento di pattern critici e monitoraggio automatico delle azioni correttive."},
+    {id:"AI046", name:"RDA automatica (richiesta di acquisto)", cons:false, abstract:"Interfaccia conversazionale esterna a JDE che guida i richiedenti nella compilazione guidata delle Richieste di Acquisto (RdA), validando completezza e coerenza dei campi, suggerendo valori corretti in base alle policy Procurement e creando automaticamente la RdA in JDE avviando il flusso approvativo standard, senza modificarne la governance."},
   ]},
-  {label:"Qualità & Regulatory",cases:[
-    {id:"AI005",name:"Analisi documentale conformità REACH/RoHS",cons:false},
-    {id:"CONS-06",name:"★  Packaging AI Suite  (AI026 + AI029)",cons:true},
-    {id:"AI033",name:"QuAIllyty in the CUP",cons:false},
+  {label:"Qualità & Regulatory", cases:[
+    {id:"AI005", name:"Analisi documentale conformità REACH/RoHS", cons:false, abstract:"Agente AI multilingue (con supporto italiano e cinese) che legge, traduce e analizza la documentazione di conformità normativa (REACH, RoHS, MOCA) inviata dai fornitori per le macchine da caffè, compilando automaticamente il foglio Excel di sunto e segnalando componenti non conformi o privi di documentazione."},
+    {id:"CONS-06", name:"★  Packaging AI Suite  (AI026 + AI029)", cons:true, abstract:"Sistema AI integrato per la gestione della conformità e della qualità del packaging illy nei mercati internazionali. Automatizza il controllo visivo e testuale degli esecutivi di stampa, verificando l'implementazione delle modifiche, confrontando versioni e rilevando discrepanze grafiche e incoerenze tra varianti (AI029); e applica un rule engine country-specific — alimentato da Computer Vision e NLP — per validare la conformità legale di testi, claim, simboli e informazioni obbligatorie in ciascuno dei 135 mercati, riducendo il ricorso a consulenti esterni e il rischio di re-printing e sanzioni (AI026). La suite è particolarmente strategica nel contesto del Brand Restage 2026, con circa 300 layout da rivedere."},
+    {id:"AI033", name:"QuAIllyty in the CUP", cons:false, abstract:"Sistema di Computer Vision integrato nelle macchine Illetta che analizza automaticamente la crema dell'espresso erogato per riconoscere se la preparazione è corretta o meno, innescare azioni conseguenti (regolazione macinatura, alert operativo) e monitorare la qualità dell'erogazione su scala globale tramite Power BI."},
   ]},
-  {label:"Export, Logistica & ECS",cases:[
-    {id:"AI007",name:"Batch number declaration",cons:false},
-    {id:"AI011",name:"Pagamenti esteri ECS",cons:false},
-    {id:"AI018",name:"Agenti AI documenti doganali  (EUDR)",cons:false},
-    {id:"AI025",name:"Controllo fatture passive trasporto",cons:false},
-    {id:"CONS-04",name:"★  Order Intelligence Hub  (AI009 + AI010 + AI070)",cons:true},
+  {label:"Export, Logistica & ECS", cases:[
+    {id:"AI007", name:"Batch number declaration", cons:false, abstract:"Automazione della generazione e dell'invio delle dichiarazioni di lotto (batch number declaration) ai distributori esteri, oggi prodotte manualmente tramite estrazione da Business Objects, copia/incolla in template Word, conversione in PDF e invio email."},
+    {id:"AI011", name:"Pagamenti esteri ECS", cons:false, abstract:"Agente AI che calcola in tempo reale il saldo contabile netto di ogni distributore estero (considerando fatture attive/passive, note di credito, ordini aperti e fido disponibile) e centralizza le comunicazioni tra ECS, Export Robecchetto, Service Department, Contabilità e Ufficio Finanziario, riducendo il flusso di email e il rischio di phishing/errori."},
+    {id:"AI018", name:"Agenti AI documenti doganali  (EUDR)", cons:false, abstract:"Agente AI che estrae automaticamente dai PDF di bolle doganali e polizze di carico dei lotti di caffè verde importati (circa 1.400/anno) i dati di lotto, fiscali e di trasporto, li incrocia con i file Excel aziendali per verificarne la coerenza, compila il file di registrazione e archivia i documenti digitalmente (anche in ottica compliance EUDR da fine 2026)."},
+    {id:"AI025", name:"Controllo fatture passive trasporto", cons:false, abstract:"Sistema AI di verifica automatica delle fatture passive in ingresso, che confronta i dati delle fatture ricevute (fornitore, importi, voci di spesa) con gli ordini d'acquisto e i contratti presenti in JDE, segnalando discrepanze, duplicati e anomalie prima dell'approvazione e del pagamento."},
+    {id:"CONS-04", name:"★  Order Intelligence Hub  (AI009 + AI010 + AI070)", cons:true, abstract:"Hub AI integrato per la gestione intelligente del portafoglio ordini esteri, che copre l'intero ciclo dalla pianificazione alla consegna. Monitora e segnala automaticamente le discrepanze tra forecast distributori e ordini effettivi (AI010); ottimizza la pianificazione delle date di consegna B2B verso filiali e distributori UE tenendo conto di disponibilità, capacità e vincoli logistici (AI009); e, in caso di mancate produzioni o indisponibilità imballi, genera automaticamente proposte di ridatazione e aggregazione container ottimizzate accessibili a tutto il team ECS, DOP e Logistica (AI070). Il sistema sostituisce un insieme frammentato di Excel paralleli e processi su singola utenza, con impatto diretto sull'intero fatturato export."},
   ]},
-  {label:"Finance & Controlling",cases:[
-    {id:"AI012",name:"AI Agent suite crediti / contratti / assets",cons:false},
-    {id:"AI017",name:"Agente AI budget, forecast & ACT",cons:false},
-    {id:"CONS-03",name:"★  Invitalia AI Support  (AI008 + AI069)",cons:true},
+  {label:"Finance & Controlling", cases:[
+    {id:"AI012", name:"AI Agent suite crediti / contratti / assets", cons:false, abstract:"Suite di agenti AI che correla dati di crediti, contratti, ordini e beni in comodato distribuiti su CRM, ERP/JDE e repository documentali, offrendo alle funzioni AFC, Vendite e TTS una vista cliente unificata, alert predittivi su situazioni di rischio finanziario e semafori decisionali (ordinabile/critico/bloccato)."},
+    {id:"AI017", name:"Agente AI budget, forecast & ACT", cons:false, abstract:"Agente AI che, ad ogni ciclo di Budget/Forecast/ACT, riallinea automaticamente il consuntivo all'ultima struttura ufficiale, trasferisce classificazioni e note, identifica variazioni strutturali e produce dataset pronti con pivot per i responsabili, riducendo stimatamente del 70% il tempo di preparazione oggi assorbito da Excel engineering."},
+    {id:"CONS-03", name:"★  Invitalia AI Support  (AI008 + AI069)", cons:true, abstract:"Soluzione AI end-to-end a supporto dei processi legati ai finanziamenti Invitalia. Durante l'esecuzione del progetto, un chatbot guida le funzioni coinvolte (tecnica, procurement, PM, amministrazione) sulle regole di rendicontazione per fase e categoria di spesa, invia reminder proattivi sulla raccolta documentale e gestisce l'escalation sui casi complessi (AI008). A consuntivo, un agente automatizza la compilazione delle righe di rendicontazione collegando ordini JDE, fatture fornitori e bonifici, segnalando anomalie e producendo una bozza conforme ai requisiti Invitalia (AI069). Le due componenti trasformano la rendicontazione da processo emergenziale a flusso continuo, guidato e assistito."},
   ]},
-  {label:"Marketing, Sales & Digital",cases:[
-    {id:"AI024",name:"What's new professor  (scientific intelligence)",cons:false},
-    {id:"AI032",name:"Forecast & procurement macchine professionali",cons:false},
-    {id:"AI038",name:"ILLETTA Techbot  (assistente embedded)",cons:false},
-    {id:"AI039",name:"Visit PlAIanning  —  segretAIria virtuale sales",cons:false},
-    {id:"CONS-02",name:"★  ILLY GENIUS  (AI028 + AI031)",cons:true},
-    {id:"CONS-07",name:"★  Market Intelligence  (AI064 + AI065)",cons:true},
+  {label:"Marketing, Sales & Digital", cases:[
+    {id:"AI024", name:"What's new professor  (scientific intelligence)", cons:false, abstract:"Agente AI che monitora in modo continuo pubblicazioni scientifiche, brevetti, news di settore e fonti agronomiche rilevanti per i team di Ricerca, Agronomia, Marketing e Procurement, sintetizzando automaticamente le novità più rilevanti e riducendo il tempo oggi dedicato alla rassegna manuale delle fonti."},
+    {id:"AI032", name:"Forecast & procurement macchine professionali", cons:false, abstract:"Suite di agenti AI Sales + Procurement che automatizza la previsione del fabbisogno di macchine professionali per ogni Regional Manager (da dati ERP/CRM/CAT), ottimizza la generazione degli ordini di approvvigionamento ai 4 fornitori principali e introduce simulazioni what-if su scenari di capex, domanda e forniture, su un fatturato 2025 di circa €8M."},
+    {id:"AI038", name:"ILLETTA Techbot  (assistente embedded)", cons:false, abstract:"Assistente AI integrato nella macchina Illetta professionale (via display o app) che supporta il barista nella diagnosi rapida degli errori macchina, nella regolazione dei parametri di macinatura e nella preparazione delle bevande tramite guide step-by-step, puntando a ridurre del 30-40% le chiamate all'assistenza tecnica."},
+    {id:"AI039", name:"Visit PlAIanning  —  segretAIria virtuale sales", cons:false, abstract:"Assistente AI vocale e conversazionale per i sales rep, che aggrega dati da JDE, CRM, One Field, WAM e Power BI per preparare le visite ai clienti out-of-home (storico, volumi, pending, proposte commerciali), ottimizzare i giri e registrare note post-visita tramite dettatura vocale, riducendo la dispersione tra tool eterogenei."},
+    {id:"CONS-02", name:"★  ILLY GENIUS  (AI028 + AI031)", cons:true, abstract:"Assistente AI conversazionale unificato per l'esperienza cliente illy, disponibile sia su illy.com che nei canali di customer care. Da un lato guida i visitatori del sito nella scelta del caffè, del sistema porzionato o del regalo più adatto al proprio profilo, riducendo l'abbandono e aumentando conversione e upselling (AI028); dall'altro risponde in modo personalizzato e coerente alle domande post-acquisto su preparazione, manutenzione e compatibilità prodotti, riducendo il volume di richieste ripetitive al customer care (AI031). Un'unica knowledge base istituzionale alimenta entrambi i touchpoint, garantendo coerenza di brand e scalabilità internazionale."},
+    {id:"CONS-07", name:"★  Market Intelligence  (AI064 + AI065)", cons:true, abstract:"Agente AI di monitoraggio continuo del mercato esterno a supporto delle decisioni commerciali e di marketing. Scansiona quotidianamente i siti e i canali social dei competitor, le fonti specializzate del settore caffè/HoReCa e le riviste di marketing e packaging per produrre una newsletter settimanale automatica sulle novità competitive (AI064); in parallelo monitora ogni giorno i prezzi di listino e promozionali dei prodotti illy su e-commerce e marketplace internazionali tramite EAN code, rilevando trend, sconti medi e sentiment delle recensioni (AI065). Il sistema sostituisce servizi oggi affidati ad agenzie esterne con frequenza trimestrale/semestrale, garantendo aggiornamento in tempo reale a costi significativamente inferiori."},
   ]},
-  {label:"IT, Project Management & Trasversale",cases:[
-    {id:"AI013",name:"Gestione richieste facility management",cons:false},
-    {id:"AI016",name:"Assistant multilingue apertura item",cons:false},
-    {id:"AI019",name:"AI IT support chatbot",cons:false},
-    {id:"AI023",name:"BUDDY — vademecum digitale aziendale",cons:false},
-    {id:"CONS-01",name:"★  PM Copilot  (AI014 + AI027 + AI067)",cons:true},
+  {label:"IT, Project Management & Trasversale", cases:[
+    {id:"AI013", name:"Gestione richieste facility management", cons:false, abstract:"Sistema AI che classifica automaticamente le oltre 2.000 richieste di intervento annue su 98.000 mq di sito produttivo (oggi ricevute via email/Excel), le smista intelligentemente al team competente, individua pattern ricorrenti e produce una dashboard predittiva per la pianificazione degli interventi e dei materiali."},
+    {id:"AI016", name:"Assistant multilingue apertura item", cons:false, abstract:"Assistant AI multilingue e contestuale che guida gli utenti (in particolare le filiali estere) nella compilazione della scheda di apertura codice item, suggerendo valori corretti, spiegando le regole applicabili nella lingua dell'utente, segnalando incoerenze tra campi e avvertendo degli impatti contabili/logistici/fiscali prima del salvataggio."},
+    {id:"AI019", name:"AI IT support chatbot", cons:false, abstract:"Chatbot AI di primo livello per il supporto IT agli utenti, basato su knowledge base (procedure, FAQ, documentazione tecnica) e in evoluzione sui ticket storici di ServiceNow: risponde autonomamente alle problematiche comuni, raccoglie informazioni strutturate per aprire ticket classificati correttamente e riduce il volume di richieste a basso valore verso il fornitore esterno di servizi IT."},
+    {id:"AI023", name:"BUDDY — vademecum digitale aziendale", cons:false, abstract:"Assistente AI conversazionale basato su knowledge base aziendale dinamica (procedure, FAQ operative, riferimenti organizzativi) per rispondere in modo immediato e coerente alle domande quotidiane di agenti e dipendenti, riducendo le ricerche frammentate su SharePoint e i tempi di onboarding dei nuovi agenti."},
+    {id:"CONS-01", name:"★  PM Copilot  (AI014 + AI027 + AI067)", cons:true, abstract:"Assistente AI integrato nell'ecosistema Microsoft 365 che centralizza la gestione operativa e documentale dei progetti aziendali. Analizza automaticamente email, chat Teams, riunioni e documenti SharePoint per estrarre attività, scadenze e decisioni (AI027); mantiene un repository strutturato e interrogabile in linguaggio naturale sulla memoria storica dei progetti, facilitando il trasferimento di know-how (AI067); e genera una dashboard visiva in tempo reale con alert cromatici sulle criticità e proposte di riallineamento (AI014). Il risultato è un unico sistema di project intelligence che riduce il lavoro amministrativo del PM e aumenta la visibilità trasversale per il management."},
   ]},
 ];
-const ALL_CASES=GROUPS.flatMap(g=>g.cases);
 
-// ── SharePoint helpers ─────────────────────────────────────
-const onSP = window.location.hostname.includes('.sharepoint.com');
-const spConfigured = onSP && VOTES_FOLDER && VOTES_FOLDER !== '';
-const siteRoot = onSP ? window.location.origin : '';
+const SP_UPLOAD_LINK = "https://illy.sharepoint.com/sites/AIExplorerCommunity/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2FAIExplorerCommunity%2FDocumenti%20condivisi%2FGeneral%2F20%20%2D%20Casi%20d%E2%80%99uso%20%26%20Innovazione%2FValutazione%20priorit%C3%A0&viewid=aaf17c80%2Dec68%2D4029%2Da49a%2Df93f9cf79e9b";
 
-async function spDigest(){
-  // Get SharePoint request digest (required for write operations)
-  const r=await fetch(`${siteRoot}/_api/contextinfo`,{
-    method:'POST',credentials:'include',
-    headers:{'Accept':'application/json;odata=verbose','Content-Type':'application/json;odata=verbose'}
-  });
-  const d=await r.json();
-  return d.d.GetContextWebInformation.FormDigestValue;
-}
+const ALL_CASES = GROUPS.flatMap(g => g.cases);
+const PREVIEW = 110;
 
-async function saveToSP(filename, content){
-  const digest = await spDigest();
-  const url=`${siteRoot}/_api/web/GetFolderByServerRelativeUrl('${VOTES_FOLDER}')/Files/add(url='${encodeURIComponent(filename)}',overwrite=true)`;
-  const r=await fetch(url,{
-    method:'POST',credentials:'include',
-    headers:{
-      'Accept':'application/json;odata=verbose',
-      'X-RequestDigest':digest,
-      'Content-Type':'text/plain; charset=utf-8'
-    },
-    body:content
-  });
-  if(!r.ok) throw new Error(`SP error ${r.status}`);
-  return true;
-}
+let voterName='', voterRole='';
+let selected=new Set(), votes={};
+let lastBlob=null, lastFilename='';
 
-async function loadVotesFromSP(){
-  const url=`${siteRoot}/_api/web/GetFolderByServerRelativeUrl('${VOTES_FOLDER}')/Files?$select=Name,ServerRelativeUrl`;
-  const r=await fetch(url,{credentials:'include',headers:{'Accept':'application/json;odata=verbose'}});
-  if(!r.ok) throw new Error(`SP error ${r.status}`);
-  const d=await r.json();
-  const files=d.d.results.filter(f=>f.Name.endsWith('.json')&&f.Name.startsWith('voto_'));
-  const items=await Promise.all(files.map(f=>
-    fetch(`${siteRoot}${f.ServerRelativeUrl}`,{credentials:'include'})
-    .then(r=>r.json()).catch(()=>null)
-  ));
-  return items.filter(Boolean);
-}
-
-// ── Init ──────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
-  if(spConfigured){
-    document.getElementById('sp-ok-banner').style.display='flex';
-    document.getElementById('agg-sp-section').style.display='';
-  } else if(!onSP && VOTES_FOLDER===''){
-    document.getElementById('setup-warning').style.display='';
-  }
-});
-
-// ── Tab switch ─────────────────────────────────────────────
-function switchTab(t){
-  document.getElementById('pane-vote').style.display=t==='vote'?'':'none';
-  document.getElementById('pane-agg').style.display=t==='agg'?'':'none';
-  document.getElementById('tab-vote').classList.toggle('on',t==='vote');
-  document.getElementById('tab-agg').classList.toggle('on',t==='agg');
-}
-
-// ── Phase nav ──────────────────────────────────────────────
 function goPhase(id){
   ['intro','select','vote','done'].forEach(p=>{
-    document.getElementById('ph-'+p).style.display=p===id?'':'none';
+    document.getElementById('ph-'+p).style.display = p===id?'':'none';
   });
   window.scrollTo(0,0);
 }
 function resetAll(){
-  selected=new Set();votes={};
+  selected=new Set(); votes={};
   document.getElementById('inp-name').value='';
   document.getElementById('inp-role').value='';
+  document.getElementById('vote-notes').value='';
 }
 
-// ── Voting state ───────────────────────────────────────────
-let voterName='',voterRole='';
-let selected=new Set(),votes={};
-let lastBlob=null,lastFilename='';
+// ── Abstract expand/collapse ──────────────────────────────
+function toggleAbs(safeId, btn){
+  const rest = document.getElementById('abs-rest-'+safeId);
+  const isOpen = rest.classList.contains('open');
+  rest.classList.toggle('open', !isOpen);
+  btn.textContent = isOpen ? ' Leggi tutto' : ' Chiudi';
+}
 
+function abstractHTML(c){
+  const abs = c.abstract;
+  const sid = c.id.replace(/[^a-zA-Z0-9]/g,'_');
+  if(abs.length <= PREVIEW){
+    return `<div class="abstract-wrap">${abs}</div>`;
+  }
+  // Find a clean break point near PREVIEW chars
+  let cut = PREVIEW;
+  const space = abs.lastIndexOf(' ', PREVIEW + 20);
+  if(space > PREVIEW - 30) cut = space;
+  const preview = abs.slice(0, cut);
+  const rest = abs.slice(cut);
+  return `<div class="abstract-wrap">${preview}<span class="abstract-rest" id="abs-rest-${sid}">${rest}</span> <button class="abs-btn" id="abs-btn-${sid}" onclick="event.stopPropagation();toggleAbs('${sid}',this)"> Leggi tutto</button></div>`;
+}
+
+// ── Intro ─────────────────────────────────────────────────
 function startSelect(){
   voterName=document.getElementById('inp-name').value.trim();
   voterRole=document.getElementById('inp-role').value.trim();
@@ -421,17 +341,26 @@ function startSelect(){
   goPhase('select');
 }
 
+// ── Select ────────────────────────────────────────────────
 function renderSelectGroups(){
-  const cont=document.getElementById('grp-sel');cont.innerHTML='';
+  const cont=document.getElementById('grp-sel'); cont.innerHTML='';
   GROUPS.forEach(g=>{
-    const div=document.createElement('div');div.className='card';div.style.marginBottom='10px';
-    div.innerHTML=`<div class="grp-hdr"><div class="grp-label">${g.label}</div>
-      <button class="btn-xs" onclick="toggleGrp('${g.label}')">Seleziona tutti</button></div>`;
+    const div=document.createElement('div');
+    div.className='card'; div.style.marginBottom='10px';
+    div.innerHTML=`<div class="grp-hdr">
+      <div class="grp-label">${g.label}</div>
+      <button class="btn-xs" onclick="toggleGrp(${JSON.stringify(g.label)})">Seleziona tutti</button>
+    </div>`;
     g.cases.forEach(c=>{
-      const row=document.createElement('div');row.className='chk-row';row.onclick=()=>toggleCase(c.id);
-      row.innerHTML=`<div class="cb" id="cb-${c.id}"></div>
-        <span class="id-badge${c.cons?' cons':''}">${c.id}</span>
-        <span class="case-name${c.cons?' cons':''}">${c.name}</span>`;
+      const row=document.createElement('div');
+      row.className='chk-row'; row.onclick=()=>toggleCase(c.id);
+      row.innerHTML=`
+        <div class="cb" id="cb-${c.id.replace(/[^a-zA-Z0-9]/g,'_')}"></div>
+        <div class="case-info">
+          <span class="id-badge${c.cons?' cons':''}">${c.id}</span>
+          <span class="case-name${c.cons?' cons':''}">${c.name}</span>
+          ${abstractHTML(c)}
+        </div>`;
       div.appendChild(row);
     });
     cont.appendChild(div);
@@ -439,60 +368,83 @@ function renderSelectGroups(){
 }
 
 function toggleCase(id){
-  if(selected.has(id)){selected.delete(id);delete votes[id];document.getElementById('cb-'+id).className='cb';}
-  else{selected.add(id);votes[id]=0;document.getElementById('cb-'+id).className='cb on';}
+  const sid=id.replace(/[^a-zA-Z0-9]/g,'_');
+  if(selected.has(id)){
+    selected.delete(id); delete votes[id];
+    document.getElementById('cb-'+sid).className='cb';
+  } else {
+    selected.add(id); votes[id]=0;
+    document.getElementById('cb-'+sid).className='cb on';
+  }
   updateSelCount();
 }
 function toggleGrp(label){
   const g=GROUPS.find(x=>x.label===label);
   const allOn=g.cases.every(c=>selected.has(c.id));
-  g.cases.forEach(c=>{if(allOn){selected.delete(c.id);delete votes[c.id];document.getElementById('cb-'+c.id).className='cb';}
-    else{selected.add(c.id);votes[c.id]=votes[c.id]||0;document.getElementById('cb-'+c.id).className='cb on';}});
+  g.cases.forEach(c=>{
+    const sid=c.id.replace(/[^a-zA-Z0-9]/g,'_');
+    if(allOn){selected.delete(c.id);delete votes[c.id];document.getElementById('cb-'+sid).className='cb';}
+    else{selected.add(c.id);votes[c.id]=votes[c.id]||0;document.getElementById('cb-'+sid).className='cb on';}
+  });
   updateSelCount();
 }
 function updateSelCount(){
-  const n=selected.size,el=document.getElementById('sel-count');
-  el.textContent=n+' selezionati';el.className='pill '+(n>0?'pill-green':'pill-gray');
+  const n=selected.size, el=document.getElementById('sel-count');
+  el.textContent=n+' selezionati'; el.className='pill '+(n>0?'pill-green':'pill-gray');
   document.getElementById('btn-to-vote').disabled=!n;
 }
 
+// ── Vote ──────────────────────────────────────────────────
 function startVote(){
   if(!selected.size)return;
-  renderVoteGroups();goPhase('vote');updateTracker();
+  renderVoteGroups(); goPhase('vote'); updateTracker();
 }
+
 function renderVoteGroups(){
-  const cont=document.getElementById('grp-vote');cont.innerHTML='';
+  const cont=document.getElementById('grp-vote'); cont.innerHTML='';
   GROUPS.forEach(g=>{
-    const sel=g.cases.filter(c=>selected.has(c.id));if(!sel.length)return;
-    const div=document.createElement('div');div.className='card';
-    div.innerHTML=`<div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px">${g.label}</div>`;
+    const sel=g.cases.filter(c=>selected.has(c.id));
+    if(!sel.length)return;
+    const div=document.createElement('div'); div.className='card';
+    div.innerHTML=`<div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">${g.label}</div>`;
     sel.forEach(c=>{
-      const row=document.createElement('div');row.className='vote-row'+(c.cons?' cons-row':'');
-      row.innerHTML=`<span class="id-badge${c.cons?' cons':''}">${c.id}</span>
-        <span style="font-size:13px;line-height:1.4${c.cons?';font-weight:500':''}">${c.name}</span>
-        <span class="pct" id="pct-${c.id}"></span>
-        <input type="number" class="num-inp" id="v-${c.id}" min="0" max="100" value="" placeholder="0"
-          oninput="setVote('${c.id}',this.value)">`;
+      const sid=c.id.replace(/[^a-zA-Z0-9]/g,'_');
+      const row=document.createElement('div');
+      row.className='vote-row'+(c.cons?' cons-row':'');
+      row.innerHTML=`
+        <div class="vote-left">
+          <div class="vote-meta"><span class="id-badge${c.cons?' cons':''}">${c.id}</span></div>
+          <div class="vote-name${c.cons?' cons':''}">${c.name}</div>
+          ${abstractHTML(c)}
+        </div>
+        <div class="vote-right">
+          <input type="number" class="num-inp" id="v-${sid}" min="0" max="100"
+            value="" placeholder="0" oninput="setVote('${c.id}',this.value)">
+          <span class="pct-label" id="pct-${sid}"></span>
+        </div>`;
       div.appendChild(row);
     });
     cont.appendChild(div);
   });
 }
+
 function setVote(id,val){
+  const sid=id.replace(/[^a-zA-Z0-9]/g,'_');
   const num=Math.max(0,parseInt(val)||0);
   const other=Object.entries(votes).filter(([k])=>k!==id).reduce((a,[,b])=>a+(parseInt(b)||0),0);
   const capped=Math.min(num,100-other);
   votes[id]=capped;
-  const inp=document.getElementById('v-'+id);
-  if(inp&&capped!==num)inp.value=capped||'';
-  if(inp)inp.classList.toggle('has-val',capped>0);
+  const inp=document.getElementById('v-'+sid);
+  if(inp&&capped!==num) inp.value=capped||'';
+  if(inp) inp.classList.toggle('has-val',capped>0);
   updateTracker();
 }
 function updateTracker(){
   const tot=Object.values(votes).reduce((a,b)=>a+(parseInt(b)||0),0);
   const rem=100-tot;
   const nu=document.getElementById('trk-n');
-  nu.textContent=tot;nu.style.color=rem<0?'var(--red)':rem===0?'var(--green)':'var(--text)';
+  nu.textContent=tot;
+  nu.style.color=rem<0?'var(--red)':rem===0?'var(--green)':'var(--text)';
   const pill=document.getElementById('trk-pill');
   if(rem===0){pill.textContent='✓ Pronto';pill.className='pill pill-green';}
   else if(rem<0){pill.textContent=Math.abs(rem)+' in eccesso';pill.className='pill pill-red';}
@@ -501,179 +453,61 @@ function updateTracker(){
   bar.style.width=Math.min(100,tot)+'%';
   bar.style.background=rem<0?'var(--red)':rem===0?'var(--green)':'#378ADD';
   document.getElementById('btn-submit').disabled=(rem!==0);
-  if(tot>0)selected.forEach(id=>{
-    const el=document.getElementById('pct-'+id);
+  if(tot>0) selected.forEach(id=>{
+    const sid=id.replace(/[^a-zA-Z0-9]/g,'_');
+    const el=document.getElementById('pct-'+sid);
     const v=parseInt(votes[id])||0;
-    if(el)el.textContent=v>0?Math.round(v/tot*100)+'%':'';
+    if(el) el.textContent=v>0?Math.round(v/tot*100)+'%':'';
   });
 }
 function distEvenly(){
   const ids=[...selected];if(!ids.length)return;
   const base=Math.floor(100/ids.length),rem=100-base*ids.length;
-  ids.forEach((id,i)=>{votes[id]=base+(i<rem?1:0);const inp=document.getElementById('v-'+id);if(inp){inp.value=votes[id];inp.classList.add('has-val');}});
+  ids.forEach((id,i)=>{
+    const sid=id.replace(/[^a-zA-Z0-9]/g,'_');
+    votes[id]=base+(i<rem?1:0);
+    const inp=document.getElementById('v-'+sid);
+    if(inp){inp.value=votes[id];inp.classList.add('has-val');}
+  });
   updateTracker();
 }
 function resetVotes(){
-  selected.forEach(id=>{votes[id]=0;const inp=document.getElementById('v-'+id);if(inp){inp.value='';inp.classList.remove('has-val');}});
+  selected.forEach(id=>{
+    const sid=id.replace(/[^a-zA-Z0-9]/g,'_');
+    votes[id]=0;
+    const inp=document.getElementById('v-'+sid);
+    if(inp){inp.value='';inp.classList.remove('has-val');}
+  });
   updateTracker();
 }
 
-// ── Submit ─────────────────────────────────────────────────
-async function submitVote(){
+// ── Submit ────────────────────────────────────────────────
+function submitVote(){
   const tot=Object.values(votes).reduce((a,b)=>a+(parseInt(b)||0),0);
   if(tot!==100)return;
-
-  const record={name:voterName,role:voterRole,timestamp:new Date().toISOString(),
-    votes:Object.fromEntries(Object.entries(votes).filter(([,v])=>parseInt(v)>0))};
+  const notes=document.getElementById('vote-notes').value.trim();
+  const record={
+    name:voterName, role:voterRole,
+    timestamp:new Date().toISOString(),
+    notes: notes||null,
+    votes:Object.fromEntries(Object.entries(votes).filter(([,v])=>parseInt(v)>0))
+  };
   const json=JSON.stringify(record,null,2);
   const date=new Date().toISOString().slice(0,10);
   const fname=`voto_${voterName.replace(/\s+/g,'_')}_${date}.json`;
-
   lastBlob=new Blob([json],{type:'application/json'});
   lastFilename=fname;
-
-  const btn=document.getElementById('btn-submit');
-  btn.disabled=true;btn.textContent='Salvataggio…';
-
-  let saved=false,spError='';
-  if(spConfigured){
-    try{
-      await saveToSP(fname,json);
-      saved=true;
-    }catch(e){
-      spError=e.message;
-    }
-  }
-
-  // Show done screen
+  triggerDownload(lastBlob,fname);
   document.getElementById('done-name').textContent='Grazie, '+voterName.split(' ')[0]+'!';
-  const dlBtn=document.getElementById('btn-dl-backup');
-
-  if(saved){
-    document.getElementById('done-sub').textContent='Il tuo voto è stato salvato automaticamente su SharePoint.';
-    document.getElementById('done-box').innerHTML=
-      `<strong style="display:block;margin-bottom:6px">Voto salvato</strong>
-      Il file <code style="background:white;padding:1px 6px;border-radius:3px;font-size:11px">${fname}</code>
-      è ora disponibile nella cartella SharePoint configurata. Non devi fare altro.`;
-    dlBtn.style.display='inline-block';
-    dlBtn.textContent='Scarica copia locale (opzionale)';
-  } else if(spConfigured && spError){
-    document.getElementById('done-sub').textContent='Errore nel salvataggio su SharePoint. Usa il backup locale.';
-    document.getElementById('done-box').innerHTML=
-      `<strong style="display:block;margin-bottom:6px;color:var(--red-d)">Errore SharePoint</strong>
-      ${spError}. Scarica il file JSON e invialo manualmente al coordinatore.`;
-    dlBtn.style.display='inline-block';
-    dlBtn.textContent='Scarica JSON e invialo al coordinatore';
-    triggerDownload(lastBlob,fname);
-  } else {
-    // No SP configured — always download
-    document.getElementById('done-sub').textContent='Il tuo file di voto è stato scaricato.';
-    document.getElementById('done-box').innerHTML=
-      `<strong style="display:block;margin-bottom:6px">Prossimo passo</strong>
-      Invia il file <code style="background:white;padding:1px 6px;border-radius:3px;font-size:11px">${fname}</code>
-      al coordinatore via email o Teams.`;
-    dlBtn.style.display='inline-block';
-    dlBtn.textContent='Riscarica il file';
-    triggerDownload(lastBlob,fname);
-  }
-
-  btn.disabled=false;btn.textContent='Invia il mio voto';
+  document.getElementById('done-filename').textContent=fname;
+  document.getElementById('sp-link').href=SP_UPLOAD_LINK;
   goPhase('done');
 }
 function redownload(){if(lastBlob)triggerDownload(lastBlob,lastFilename);}
 function triggerDownload(blob,name){
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=name;a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-}
-
-// ── Aggregator ─────────────────────────────────────────────
-let aggData=[];
-
-async function loadFromSharePoint(){
-  const btn=document.getElementById('sp-load-txt');
-  const status=document.getElementById('sp-load-status');
-  btn.innerHTML='<span class="spinner"></span> Caricamento…';
-  status.textContent='';
-  try{
-    const items=await loadVotesFromSP();
-    items.forEach(d=>{if(!aggData.find(x=>x.name===d.name&&x.timestamp===d.timestamp))aggData.push(d);});
-    status.textContent=`${items.length} file caricati`;
-    renderAgg();
-  }catch(e){
-    status.style.color='var(--red)';
-    status.textContent='Errore: '+e.message+'. Verifica il percorso VOTES_FOLDER e che la cartella esista.';
-  }
-  btn.textContent='Carica voti da SharePoint';
-}
-
-function handleDrop(e){
-  e.preventDefault();document.getElementById('drop-zone').classList.remove('over');
-  handleFiles(e.dataTransfer.files);
-}
-function handleFiles(files){
-  Promise.all([...files].map(f=>f.text().then(t=>{try{const d=JSON.parse(t);if(d.name&&d.votes)return d;}catch(e){}return null;}))).then(res=>{
-    res.filter(Boolean).forEach(d=>{if(!aggData.find(x=>x.name===d.name&&x.timestamp===d.timestamp))aggData.push(d);});
-    renderAgg();
-  });
-}
-function clearAggData(){aggData=[];renderAgg();}
-
-function renderAgg(){
-  const fw=document.getElementById('file-chips-wrap');
-  const ae=document.getElementById('agg-empty');
-  const ar=document.getElementById('agg-results');
-  if(!aggData.length){fw.style.display='none';ae.style.display='';ar.style.display='';document.getElementById('agg-ranking').innerHTML='';return;}
-  fw.style.display='';ae.style.display='none';ar.style.display='';
-  document.getElementById('file-chips').innerHTML=aggData.map(d=>`<span class="file-chip">${d.name}</span>`).join('');
-
-  const totals={};
-  aggData.forEach(d=>Object.entries(d.votes).forEach(([id,pts])=>{totals[id]=(totals[id]||0)+(parseInt(pts)||0);}));
-  const maxPts=Math.max(...Object.values(totals),1);
-  const totalAllPts=Object.values(totals).reduce((a,b)=>a+b,0);
-  const ranked=ALL_CASES.map(c=>({...c,pts:totals[c.id]||0})).filter(c=>c.pts>0).sort((a,b)=>b.pts-a.pts);
-
-  document.getElementById('agg-n-v').textContent=aggData.length;
-  document.getElementById('agg-n-c').textContent=ranked.length;
-  document.getElementById('agg-tot').textContent=totalAllPts;
-
-  document.getElementById('agg-ranking').innerHTML=ranked.map((c,i)=>{
-    const pct=Math.round(c.pts/maxPts*100);
-    const share=totalAllPts>0?(c.pts/totalAllPts*100).toFixed(1):'0';
-    const col=i===0?'var(--red)':i<3?'var(--amber)':'var(--blue)';
-    return `<div class="res-row">
-      <span style="font-size:12px;color:var(--muted);text-align:center">${i+1}</span>
-      <span class="id-badge${c.cons?' cons':''}">${c.id}</span>
-      <div><div style="font-size:13px${c.cons?';font-weight:500':''}">${c.name}</div>
-        <div class="res-bar-bg"><div class="res-bar" style="width:${pct}%;background:${col}"></div></div></div>
-      <div style="text-align:right">
-        <div style="font-size:14px;font-weight:600">${c.pts}<span style="font-size:10px;color:var(--muted)">pt</span></div>
-        <div style="font-size:11px;color:var(--muted)">${share}%</div>
-      </div></div>`;
-  }).join('');
-
-  document.getElementById('agg-detail').innerHTML=aggData.map(d=>{
-    const top=Object.entries(d.votes).sort(([,a],[,b])=>b-a).slice(0,3).map(([id,v])=>`${id} (${v}pt)`).join(' · ');
-    return `<div style="padding:8px 0;border-bottom:.5px solid var(--border)">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px">
-        <span style="font-size:13px;font-weight:500">${d.name}</span>
-        <span style="font-size:11px;color:var(--muted)">${d.role} · ${new Date(d.timestamp).toLocaleDateString('it-IT')}</span>
-      </div>
-      <div style="font-size:12px;color:var(--muted)">Top 3: ${top}</div></div>`;
-  }).join('');
-}
-
-function exportCSV(){
-  if(!aggData.length)return;
-  const totals={};
-  aggData.forEach(d=>Object.entries(d.votes).forEach(([id,pts])=>{totals[id]=(totals[id]||0)+(parseInt(pts)||0);}));
-  const totalPts=Object.values(totals).reduce((a,b)=>a+b,0);
-  let csv='Rank,ID,Nome,Punti totali,% del totale\n';
-  ALL_CASES.map(c=>({...c,pts:totals[c.id]||0})).sort((a,b)=>b.pts-a.pts).forEach((c,i)=>{
-    if(c.pts>0)csv+=`${i+1},"${c.id}","${c.name}",${c.pts},${totalPts>0?(c.pts/totalPts*100).toFixed(1):'0'}%\n`;
-  });
-  csv+='\nVotante,Ruolo,Data\n';
-  aggData.forEach(d=>csv+=`"${d.name}","${d.role}","${new Date(d.timestamp).toLocaleDateString('it-IT')}"\n`);
-  triggerDownload(new Blob([csv],{type:'text/csv;charset=utf-8'}),`risultati_ai_vote_${new Date().toISOString().slice(0,10)}.csv`);
 }
 </script>
 </body>
